@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { CVPreview } from "@/components/CVPreview";
 import { useToast } from "@/hooks/use-toast";
+import LandingPage from "@/components/LandingPage";
 import {
   Sparkles,
   Upload,
@@ -23,6 +24,7 @@ import {
 import html2pdf from "html2pdf.js";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
 import { saveAs } from "file-saver";
+import { GoogleGenAI } from "@google/genai";
 
 interface Experience {
   company: string;
@@ -43,7 +45,7 @@ interface Education {
 
 const Index = () => {
   const { toast } = useToast();
-  const [view, setView] = useState<"form" | "preview">("form");
+  const [view, setView] = useState<"landing" | "form" | "preview">("landing");
   const [loading, setLoading] = useState(false);
 
   // Form State
@@ -295,33 +297,13 @@ Your job is to create a professional CV using the data above. Follow these rules
 CRITICAL: Return ONLY valid JSON. Do not include any other text, markdown, code fences, or explanation.`;
 
     try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: prompt,
-                  },
-                ],
-              },
-            ],
-          }),
-        }
-      );
+      const ai = new GoogleGenAI({ apiKey });
+      const response = await ai.models.generateContent({
+        model: "gemini-2.0-flash-exp",
+        contents: prompt,
+      });
 
-      if (!response.ok) {
-        throw new Error("Failed to generate CV. Please check your API key and try again.");
-      }
-
-      const data = await response.json();
-      const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      const generatedText = response.text;
 
       if (!generatedText) {
         throw new Error("No response from AI");
@@ -443,9 +425,13 @@ CRITICAL: Return ONLY valid JSON. Do not include any other text, markdown, code 
     });
   };
 
+  if (view === "landing") {
+    return <LandingPage onGetStarted={() => setView("form")} />;
+  }
+
   if (view === "preview" && cvData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-12 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="flex justify-center gap-4 mb-8 flex-wrap">
             <Button onClick={() => setView("form")} variant="outline" size="lg" className="gap-2">
@@ -469,17 +455,17 @@ CRITICAL: Return ONLY valid JSON. Do not include any other text, markdown, code 
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <Sparkles className="w-10 h-10 text-purple-400 animate-pulse" />
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <Sparkles className="w-10 h-10 text-primary animate-pulse" />
+            <h1 className="text-5xl font-bold text-primary">
               AI CV Builder
             </h1>
           </div>
-          <p className="text-purple-200 text-lg">
+          <p className="text-muted-foreground text-lg">
             Create a professional CV powered by Google Gemini AI
           </p>
         </div>

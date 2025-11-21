@@ -8,47 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 210 40% 98%;
+    --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 47% 11%;
+    --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 47% 11%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 271 81% 56%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 210 100% 56%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 328 86% 70%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 220 13% 91%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 271 81% 56%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 199 89% 48%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 271 81% 56%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 210 100% 56%;
 
     --radius: 0.75rem;
 
     /* Custom CV Builder colors */
-    --gradient-start: 222 47% 11%;
-    --gradient-via: 271 91% 24%;
-    --gradient-end: 222 47% 11%;
+    --gradient-start: 210 40% 98%;
+    --gradient-via: 210 100% 96%;
+    --gradient-end: 210 40% 98%;
     
-    --purple-glow: 271 81% 56%;
-    --pink-accent: 328 86% 70%;
+    --blue-glow: 210 100% 56%;
+    --blue-accent: 199 89% 48%;
     
     /* Shadows */
-    --shadow-purple: 271 81% 56% / 0.3;
-    --shadow-glow: 271 91% 65% / 0.4;
+    --shadow-blue: 210 100% 56% / 0.3;
+    --shadow-glow: 199 89% 48% / 0.4;
   }
 }
 

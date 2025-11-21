@@ -57,11 +57,9 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        purple: {
-          glow: "hsl(var(--purple-glow))",
-        },
-        pink: {
-          accent: "hsl(var(--pink-accent))",
+        blue: {
+          glow: "hsl(var(--blue-glow))",
+          accent: "hsl(var(--blue-accent))",
         },
       },
       borderRadius: {

@@ -182,6 +182,56 @@ const Index = () => {
     return true;
   };
 
+  const fillDemoData = () => {
+    setFullName("Sarah Johnson");
+    setEmail("sarah.johnson@email.com");
+    setPhone("+1 (555) 123-4567");
+    setLocation("San Francisco, CA");
+    setTitle("Senior Full-Stack Developer");
+    setSummary("Passionate and results-driven Full-Stack Developer with 6+ years of experience building scalable web applications and leading development teams. Expertise in React, Node.js, and cloud technologies. Proven track record of delivering high-impact projects that drive business growth and improve user experience. Strong problem-solver with excellent communication skills and a commitment to writing clean, maintainable code.");
+    setSkills("JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, AWS, Docker, Kubernetes, Git, CI/CD, REST APIs, GraphQL, Agile/Scrum, Team Leadership");
+    setExperiences([
+      {
+        company: "TechCorp Solutions",
+        title: "Senior Full-Stack Developer",
+        startDate: "Jan 2021",
+        endDate: "Present",
+        description: "Lead development of enterprise web applications serving 100K+ users. Architect and implement scalable microservices using Node.js and React. Mentor junior developers and conduct code reviews. Reduced application load time by 40% through optimization. Implemented CI/CD pipelines reducing deployment time by 60%."
+      },
+      {
+        company: "StartupXYZ",
+        title: "Full-Stack Developer",
+        startDate: "Mar 2019",
+        endDate: "Dec 2020",
+        description: "Built and maintained customer-facing web applications using React and Node.js. Developed RESTful APIs serving mobile and web clients. Collaborated with design team to implement responsive UI components. Improved test coverage from 40% to 85%. Participated in agile development process and sprint planning."
+      },
+      {
+        company: "Digital Innovations Inc",
+        title: "Junior Developer",
+        startDate: "Jun 2018",
+        endDate: "Feb 2019",
+        description: "Developed features for company website and internal tools. Fixed bugs and implemented new functionality based on user feedback. Worked with MongoDB and Express.js to build backend services. Learned modern development practices and version control with Git. Contributed to team documentation and knowledge base."
+      }
+    ]);
+    setEducations([
+      {
+        school: "University of California, Berkeley",
+        degree: "Bachelor of Science in Computer Science",
+        field: "Computer Science",
+        graduationDate: "May 2018",
+        gpa: "3.8",
+        honors: "Magna Cum Laude, Dean's List"
+      }
+    ]);
+    setCertifications("AWS Certified Solutions Architect, MongoDB Certified Developer");
+    setLanguages("English (Native), Spanish (Conversational)");
+    setProjects("Open-source contributor to React ecosystem, Built personal portfolio showcasing 10+ projects");
+    toast({
+      title: "Demo Data Loaded",
+      description: "Form filled with sample data. Click 'Generate My CV with AI' to continue.",
+    });
+  };
+
   const generateCV = async () => {
     if (!validateForm()) return;
 
@@ -299,7 +349,7 @@ CRITICAL: Return ONLY valid JSON. Do not include any other text, markdown, code 
     try {
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash-exp",
+        model: "gemini-2.0-flash-exp",
         contents: prompt,
       });
 
@@ -468,6 +518,18 @@ CRITICAL: Return ONLY valid JSON. Do not include any other text, markdown, code 
           <p className="text-muted-foreground text-lg">
             Create a professional CV powered by Google Gemini AI
           </p>
+          <div className="mt-6">
+            <Button 
+              type="button"
+              onClick={fillDemoData} 
+              variant="outline" 
+              size="lg"
+              className="gap-2"
+            >
+              <Sparkles className="w-4 h-4" />
+              Fill Demo Data
+            </Button>
+          </div>
         </div>
 
         {/* Form */}

@@ -20,6 +20,7 @@ import {
   Briefcase,
   GraduationCap,
   Code,
+  Target,
 } from "lucide-react";
 import html2pdf from "html2pdf.js";
 import { Document, Packer, Paragraph, TextRun, HeadingLevel } from "docx";
@@ -56,6 +57,7 @@ const Index = () => {
   const [title, setTitle] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
   const [summary, setSummary] = useState("");
+  const [jobDescription, setJobDescription] = useState("");
   const [skills, setSkills] = useState("");
   const [certifications, setCertifications] = useState("");
   const [languages, setLanguages] = useState("");
@@ -188,6 +190,7 @@ const Index = () => {
     setPhone("+1 (555) 123-4567");
     setLocation("San Francisco, CA");
     setTitle("Senior Full-Stack Developer");
+    setJobDescription("We're seeking a Senior Full-Stack Developer with 5+ years experience to join our growing team. Must have expertise in React, Node.js, TypeScript, AWS, and microservices architecture. You'll lead development of enterprise applications, mentor junior developers, and drive technical decisions. Strong problem-solving skills and experience with CI/CD pipelines required. We value team collaboration and clean code practices.");
     setSummary("Passionate and results-driven Full-Stack Developer with 6+ years of experience building scalable web applications and leading development teams. Expertise in React, Node.js, and cloud technologies. Proven track record of delivering high-impact projects that drive business growth and improve user experience. Strong problem-solver with excellent communication skills and a commitment to writing clean, maintainable code.");
     setSkills("JavaScript, TypeScript, React, Node.js, Express, MongoDB, PostgreSQL, AWS, Docker, Kubernetes, Git, CI/CD, REST APIs, GraphQL, Agile/Scrum, Team Leadership");
     setExperiences([
@@ -261,9 +264,9 @@ const Index = () => {
       executive: "Executive - Premium, sophisticated, emphasize leadership and results",
     };
 
-    const prompt = `You are an expert professional CV writer and designer. Your task is to create a polished, professionally formatted CV that impresses hiring managers.
+    const prompt = `You are an expert professional CV writer and designer. Your task is to create a polished, professionally formatted CV that impresses hiring managers and passes ATS systems.
 
-CANDIDATE DATA:
+${jobDescription ? `TARGET JOB DESCRIPTION:\n${jobDescription}\n\n⚠️ CRITICAL: Tailor this CV specifically to match the job requirements above. Emphasize relevant skills, experience, and achievements that align with what this employer is seeking. Use similar keywords and phrases from the job description where appropriate.\n\n` : ""}CANDIDATE DATA:
 Name: ${fullName}
 Email: ${email}
 Phone: ${phone}
@@ -289,7 +292,7 @@ ${projects ? `PROJECTS:\n${projects}\n` : ""}
 TEMPLATE STYLE: ${templateInstructions[template]}
 
 INSTRUCTIONS:
-Your job is to create a professional CV using the data above. Follow these rules:
+Your job is to create a professional CV using the data above${jobDescription ? ", specifically tailored to match the target job description" : ""}. Follow these rules:
 
 1. Transform EACH job description into 3-4 compelling bullet points with:
    - Action verbs (Led, Built, Developed, Optimized, Architected, etc.)
@@ -297,6 +300,7 @@ Your job is to create a professional CV using the data above. Follow these rules
    - Focus on business impact, not just tasks
    - 15-20 words per bullet maximum
    - Start each with a strong action verb
+   ${jobDescription ? "- Emphasize experiences and achievements that directly relate to the target job requirements" : ""}
 
 2. Enhance the professional summary to be:
    - Compelling and specific (100-120 words)
@@ -304,11 +308,13 @@ Your job is to create a professional CV using the data above. Follow these rules
    - Include 1-2 key achievements or specialties
    - Professional, confident tone
    - Make it stand out
+   ${jobDescription ? "- Mirror key requirements and terminology from the job description" : ""}
 
 3. Organize skills into 3-4 logical categories:
    - Examples: Technical, Leadership, Languages, Soft Skills, Tools & Technologies, etc.
    - Group related skills together
    - List 3-8 skills per category
+   ${jobDescription ? "- Prioritize skills mentioned in the job description" : ""}
 
 4. Format the ENTIRE response as VALID JSON ONLY (no other text, no markdown, no preamble):
 
@@ -632,6 +638,25 @@ CRITICAL: Return ONLY valid JSON. Do not include any other text, markdown, code 
                   )}
                 </div>
               </div>
+            </div>
+
+            {/* Job Description - New Field */}
+            <div className="bg-gradient-to-br from-blue-50 to-accent/10 p-6 rounded-xl border-2 border-primary/20">
+              <div className="flex items-center gap-2 mb-4">
+                <Target className="w-6 h-6 text-primary" />
+                <h2 className="text-2xl font-bold text-card-foreground">Target Job Description</h2>
+                <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full font-semibold">RECOMMENDED</span>
+              </div>
+              <p className="text-sm text-muted-foreground mb-3">
+                Paste the job description you're applying to. Our AI will tailor your CV to match what employers want.
+              </p>
+              <Textarea
+                value={jobDescription}
+                onChange={(e) => setJobDescription(e.target.value)}
+                placeholder="Paste the full job description here (responsibilities, requirements, qualifications). This helps our AI create a perfectly tailored CV that highlights your most relevant experience..."
+                rows={6}
+                className="bg-white"
+              />
             </div>
 
             {/* Professional Summary */}

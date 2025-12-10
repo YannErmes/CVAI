@@ -20,10 +20,10 @@ All colors MUST be HSL.
     --primary: 210 100% 56%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 210 40% 90%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 214.3 14% 80%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --accent: 199 89% 48%;
@@ -32,8 +32,8 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --border: 214.3 31.8% 85%;
+    --input: 214.3 31.8% 85%;
     --ring: 210 100% 56%;
 
     --radius: 0.75rem;
@@ -50,6 +50,49 @@ All colors MUST be HSL.
     --shadow-blue: 210 100% 56% / 0.3;
     --shadow-glow: 199 89% 48% / 0.4;
   }
+
+  /* Dark mode */
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 100% 56%;
+    --primary-foreground: 222.2 84% 4.9%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 96.1%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215.4 16.3% 66.9%;
+
+    --accent: 199 89% 48%;
+    --accent-foreground: 222.2 84% 4.9%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+
+    /* Custom dark mode colors */
+    --gradient-start: 222.2 84% 4.9%;
+    --gradient-via: 217.2 32.6% 17.5%;
+    --gradient-end: 222.2 84% 4.9%;
+    
+    --blue-glow: 210 100% 56%;
+    --blue-accent: 199 89% 48%;
+    
+    /* Dark shadows */
+    --shadow-blue: 210 100% 56% / 0.2;
+    --shadow-glow: 199 89% 48% / 0.3;
+  }
 }
 
 @layer base {
@@ -61,3 +104,67 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* CV export / preview full-page styles */
+#cv-preview {
+  /* Force page size for export (A4 by default) */
+  width: 210mm !important;
+  min-height: 297mm !important;
+  height: 297mm !important;
+  padding: 20px !important; /* keep inner padding 20px */
+  box-sizing: border-box !important;
+  margin: 0 auto !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+/* Ensure sections are not split across pages */
+#cv-preview > * {
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* Specific smaller gaps to help fit on one page */
+.cv-section {
+  margin-bottom: 12px !important;
+  padding-bottom: 0 !important;
+}
+
+@media print {
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    background: transparent !important;
+  }
+  /* Remove any page margins when printing via browser */
+  @page { size: A4; margin: 0; }
+  #cv-preview {
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Tighten preview/template spacing and typography to better fit one page */
+#cv-preview .p-8, #cv-preview .p-10, #cv-preview .p-12, #cv-preview .md\:p-12 {
+  padding: 20px !important;
+}
+
+#cv-preview .mb-8 { margin-bottom: 12px !important; }
+#cv-preview .mb-6 { margin-bottom: 10px !important; }
+#cv-preview .mb-12 { margin-bottom: 14px !important; }
+
+#cv-preview h1 { font-size: 28px !important; line-height: 1.05 !important; }
+#cv-preview h2 { font-size: 16px !important; line-height: 1.08 !important; }
+#cv-preview h3, #cv-preview h4 { font-size: 12px !important; line-height: 1.1 !important; }
+
+#cv-preview p { line-height: 1.15 !important; font-size: 12px !important; }
+
+/* Reduce large image sizes in preview for fitting */
+#cv-preview img { max-width: 110px !important; max-height: 110px !important; }
+
+/* Reduce thick borders used in templates to avoid large visual separators */
+#cv-preview [style*="border-bottom"] { border-bottom-width: 2px !important; }
+#cv-preview [style*="border-left"] { border-left-width: 3px !important; }
